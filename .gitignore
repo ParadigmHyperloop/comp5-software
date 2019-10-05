@@ -5,3 +5,6 @@ OnPod/Node/*/BoardFiles/Drivers
 OnPod/Node/*/BoardFiles/.mxproject
 OnPod/Node/*/BoardFiles/*.gpdsc
 OnPod/Node/.gitignore
+OnPod/Node/Examples/*/BoardFiles/Drivers
+OnPod/Node/Examples/*/BoardFiles/*.gpdsc
+OnPod/Node/Examples/*/BoardFiles/.mxproject

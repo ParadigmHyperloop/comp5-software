@@ -1,9 +1,11 @@
 .vscode
 .pio
 .DS_Store
-OnPod/Node/*/BoardFiles/Drivers
-OnPod/Node/*/BoardFiles/.mxproject
-OnPod/Node/*/BoardFiles/*.gpdsc
+OnPod/Node/*/Drivers
+OnPod/Node/*/.mxproject
+OnPod/Node/*/*.gpdsc
+OnPod/Node/*/Inc
+OnPod/Node/*/Src
 OnPod/Node/.gitignore
 OnPod/Node/Examples/*/BoardFiles/Drivers
 OnPod/Node/Examples/*/BoardFiles/*.gpdsc

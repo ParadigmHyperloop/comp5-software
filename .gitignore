@@ -7,6 +7,8 @@ OnPod/Node/*/*.gpdsc
 OnPod/Node/*/Inc
 OnPod/Node/*/Src
 OnPod/Node/.gitignore
-OnPod/Node/Examples/*/BoardFiles/Drivers
-OnPod/Node/Examples/*/BoardFiles/*.gpdsc
-OnPod/Node/Examples/*/BoardFiles/.mxproject
+OnPod/Node/Examples/*/Drivers
+OnPod/Node/Examples/*/*.gpdsc
+OnPod/Node/Examples/*/.mxproject
+OnPod/Node/Examples/*/Inc
+OnPod/Node/Examples/*/Src

@@ -4,23 +4,12 @@
   "description": "a boiler plate for creating react applications bundled by webpack",
   "main": "src/js/app.js",
   "scripts": {
-    "dev": "./node_modules/.bin/webpack-dev-server --config webpack.config.dev.js",
-    "build": "./node_modules/.bin/webpack --config webpack.config.dev.js",
-    "build:production": "./node_modules/.bin/webpack --config webpack.config.production.js",
-    "start": "./node_modules/.bin/webpack-dev-server --config webpack.config.production.js",
+    "dev": "./node_modules/.bin/webpack-dev-server --config webpack.config.js",
+    "build": "./node_modules/.bin/webpack --config webpack.config.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "homepage": "https://github.com/temilaj/react-webpack-starter",
-  "repository": "https://github.com/temilaj/react-webpack-starter.git",
-  "keywords": [
-    "react",
-    "webpack",
-    "react sample",
-    "react starter",
-    "react boilerplate"
-  ],
-  "author": "Temi Lajumoke <temi@temilajumoke.com> (http://temilajumoke.com)",
-  "license": "MIT",
+  "repository": "https://github.com/ParadigmHyperloop/comp5-software.git", 
+  "author": "Paradigm Hyperloop",
   "dependencies": {
     "babel-plugin-transform-class-properties": "^6.24.1",
     "react": "^16.6.3",

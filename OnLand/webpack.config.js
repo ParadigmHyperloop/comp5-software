@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
@@ -10,6 +11,7 @@ module.exports = {
 	output: {
 		path: path.join(__dirname, 'dist'),
 		filename: 'bundle.js',
+		publicPath: '/dist/',
 	},
 	resolve: {
 		modules: ['node_modules', './src'],
@@ -38,8 +40,12 @@ module.exports = {
 	},
 	plugins: [
 		new ExtractTextPlugin("bundle.css"),
+		new webpack.HotModuleReplacementPlugin(),
+		new webpack.EnvironmentPlugin({ NODE_ENV: 'development' }),
 	],
+	devtool: "source-map",
 	devServer: {
+		hot: true,
 		port,
 		historyApiFallback: true,
 		publicPath: '/dist/',

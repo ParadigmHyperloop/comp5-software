@@ -2,19 +2,19 @@ import './scss/style.scss';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Home from './components/Home';
+import Dashboard from './components/Dashboard';
 
 const renderApplication = () => {
   ReactDOM.render(
-    <Home /> ,
+    <Dashboard /> ,
     document.querySelector('#root')
   );
 }
 
-renderApplication(Home);
+renderApplication(Dashboard);
 
 if (module.hot) {
-  module.hot.accept("./components/Home", () => {
+  module.hot.accept("./components/Dashboard", () => {
     renderApplication();
   });
 }

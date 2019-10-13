@@ -7,11 +7,11 @@ const user = {
   lastName: 'Doe'
 };
 
-const Home = () => (
+const Dashboard = () => (
   <div>
     <h1>Hello, {formatName(user)}!</h1>
   </div>
 )
 
 
-export default Home;
+export default Dashboard;

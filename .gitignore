@@ -1,0 +1,9 @@
+.vscode
+.pio
+.DS_Store
+OnPod/Node/.gitignore
+OnPod/Node/*/BoardFiles/*
+!OnPod/Node/*/BoardFiles/*.ioc
+OnPod/Node/Examples/*/BoardFiles/*
+!OnPod/Node/Examples/*/BoardFiles/*.ioc
+

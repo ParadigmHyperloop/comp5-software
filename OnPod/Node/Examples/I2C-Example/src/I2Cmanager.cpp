@@ -1,18 +1,18 @@
 #include "I2Cwrapper.h"
 
-//Constructor 
+// constructor
 I2C::I2C(I2C_HandleTypeDef hi2c)
 {
     setHandleTypeDef(hi2c);
 }
 
-//setter for I2C HandleTypeDef structure
+// setter for I2C HandleTypeDef structure
 void I2C::setHandleTypeDef(I2C_HandleTypeDef hi2c)
 {
     m_hi2c = hi2c;
 }
 
-//getter for I2C HandleTypeDef
+// getter for I2C HandleTypeDef
 I2C_HandleTypeDef I2C::getHandleTypeDef()
 {
     return m_hi2c;
@@ -44,4 +44,3 @@ void I2C::slaveRecieve()
 {
     //implement
 }
-

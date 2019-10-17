@@ -6,9 +6,6 @@ class I2C
 
     // pointer to I2C Handle Type Def structure contains the config info for the specified I2C.
     I2C_HandleTypeDef *m_hi2c;
-
-    //pointer to data buffer supplied in master transmit method
-
     uint8_t *m_recentData; // pointer to data most recently transmitted
     uint8_t *m_dataRecieved; // pointer to data most recently received
     uint16_t m_dev_address; // address of device most recently transmitted to
@@ -17,7 +14,7 @@ class I2C
     public:
 
     // Constructor
-    I2C(I2C_HandleTypeDef *hi2c, uint16_t dev_address, uint32_t timeout);
+    I2C(I2C_HandleTypeDef *hi2c, uint32_t timeout);
     
     // Getter/setter for I2C HandleTypeDef
     HAL_I2C_StateTypeDef setHandleTypeDef(I2C_HandleTypeDef *hi2c);
@@ -62,7 +59,6 @@ class I2C
     HAL_StatusTypeDef configAnalogFilter(uint32_t FilterState);
     HAL_StatusTypeDef configDigitalFilter(uint32_t FilterState);
     
-
 };
 
 

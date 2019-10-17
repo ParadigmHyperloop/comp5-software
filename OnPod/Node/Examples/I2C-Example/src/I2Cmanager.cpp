@@ -2,10 +2,9 @@
 #include "I2CManager.h"
 
 // Constructor 
-I2C::I2C(I2C_HandleTypeDef *hi2c, uint16_t dev_address, uint32_t timeout)
+I2C::I2C(I2C_HandleTypeDef *hi2c, uint32_t timeout)
 {
     setHandleTypeDef(hi2c);
-    setDevAddress(dev_address);
     setTimeout(timeout);
 }
 

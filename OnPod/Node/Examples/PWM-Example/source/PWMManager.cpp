@@ -1,29 +1,39 @@
 #include "PWMManager.h"
 
-PWM::PWM(uint32_t per, uint32_t pul, TIM_HandleTypeDef &tim, uint32_t chan) : 
-    period(per), pulse(pul), timer(tim), channel(chan)
-    {};
+PWMManager::PWMManager(uint64_t clockSpeed, uint32_t preScaler, uint32_t period, uint32_t pulse, TIM_HandleTypeDef &tim, uint32_t channel)
+: m_clockSpeed(clockSpeed), m_preScaler(preScaler), m_period(period), m_pulse(pulse), m_timer(tim), m_channel(channel)
+{};
 
-void PWM::PWMStart()
+void PWMManager::PWMStart()
 {
-    __HAL_TIM_SET_COUNTER(&timer, period);
-    __HAL_TIM_SET_COMPARE(&timer, channel, pulse);
-    HAL_TIM_PWM_Start(&timer, channel);
+    HAL_TIM_PWM_Start(&m_timer, m_channel);
 }
 
-void PWM::PWMStop()
+void PWMManager::PWMStop()
 {
-    HAL_TIM_PWM_Stop(&timer, channel);
+    HAL_TIM_PWM_Stop(&m_timer, m_channel);
 }
 
-void PWM::setDutyCycle(uint32_t newPulse)
+void PWMManager::setDutyCycle(uint8_t newDutyCycle)
 {
-    pulse = newPulse;
-    __HAL_TIM_SET_COMPARE(&timer, channel, pulse);
+    m_pulse = m_channel * (newDutyCycle / 100.0);
+    __HAL_TIM_SET_COMPARE(&m_timer, m_channel, m_pulse);
 }
 
-void PWM::setPeriod(uint32_t newPeriod)
+void PWMManager::setPeriodMs(uint32_t newPeriod)
 {
-    period = newPeriod;
-    __HAL_TIM_SET_COUNTER(&timer, period);
+    m_period = newPeriod / 1000;
+    __HAL_TIM_SET_COUNTER(&m_timer, m_period);
+}
+
+void PWMManager::setPeriodUs(uint32_t newPeriod)
+{
+    m_period = newPeriod / 1000000;
+    __HAL_TIM_SET_COUNTER(&m_timer, m_period);
+}
+
+void PWMManager::setFrequencyHz(uint32_t newFrequency)
+{
+    m_period = 1.0 / newFrequency;
+    __HAL_TIM_SET_COUNTER(&m_timer, m_period);
 }

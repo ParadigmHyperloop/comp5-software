@@ -13,6 +13,7 @@ public:
     void setPeriodUs(uint32_t newPeriod);
     void setDutyCycle(uint8_t newDutyCycle);
     void setFrequencyHz(uint32_t newFrequency);
+    void setPulse(uint32_t newPulse);
 
 private:
     uint64_t m_clockSpeed;

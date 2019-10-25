@@ -1,18 +1,22 @@
-#pragma once
+#ifndef H_I2CINTERFACE
+#define H_I2CINTERFACE
 
-class I2CManager
+#include "main.h"
+
+class I2CInterface
 {
     private:
 
     // pointer to I2C Handle Type Def structure contains the config info for the specified I2C.
     I2C_HandleTypeDef *m_hi2c;
-    uint8_t m_dataRecieved[4]; // Data buffer for read data
+    uint8_t m_dataRecieved[8]; // Data buffer for read data
+    uint8_t m_dataBufferLength = 8;
     uint32_t m_timeout; // timeout
 
     public:
 
     // Constructor
-    I2CManager(I2C_HandleTypeDef *hi2c);
+    I2CInterface(I2C_HandleTypeDef *hi2c);
     
     // Returns a pointer to the data recieved buffer
     uint8_t* getRecievedData() {  return m_dataRecieved; }
@@ -26,11 +30,11 @@ class I2CManager
     uint32_t getAddressingMode() { return (*m_hi2c).Init.AddressingMode; }
 
     // Master transmit and recieve functions (blocking mode)
-    HAL_StatusTypeDef masterTransmit(uint16_t address, uint8_t *data, uint32_t timeout);   
+    HAL_StatusTypeDef masterTransmit(uint16_t address, uint8_t* data, uint32_t timeout, uint8_t size);   
     HAL_StatusTypeDef masterRecieve(uint16_t address, uint32_t timeout);
 
     // Reading / writing from device internal memory addresses 
-    HAL_StatusTypeDef memWrite(uint8_t *data, uint16_t devAddress, uint16_t memAddress, uint16_t memAddressSize, uint32_t timeout);
+    HAL_StatusTypeDef memWrite(uint8_t* data, uint16_t devAddress, uint16_t memAddress, uint16_t memAddressSize, uint8_t size, uint32_t timeout);
     HAL_StatusTypeDef memRead(uint16_t devAddress, uint16_t memAddress, uint16_t memAddressSize, uint32_t timeout);
     HAL_StatusTypeDef isDeviceReady(uint16_t devAddress, uint32_t trials = 100);
 
@@ -39,5 +43,4 @@ class I2CManager
     HAL_StatusTypeDef configAnalogFilter(uint32_t FilterState);
     HAL_StatusTypeDef configDigitalFilter(uint32_t FilterState);
 };
-
-
+#endif

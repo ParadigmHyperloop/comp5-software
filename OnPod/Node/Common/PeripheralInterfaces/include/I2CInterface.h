@@ -7,11 +7,11 @@ class I2CInterface
 {
     private:
 
-    // pointer to I2C Handle Type Def structure contains the config info for the specified I2C.
+    // Pointer to I2C Handle Type Def structure contains the config info for the specified I2C.
     I2C_HandleTypeDef *m_hi2c;
-    uint8_t m_dataRecieved[8]; // Data buffer for read data
+    uint8_t m_dataRecieved[8]; 
     uint8_t m_dataBufferLength = 8;
-    uint32_t m_timeout; // timeout
+    uint32_t m_timeout; 
 
     public:
 
@@ -38,9 +38,16 @@ class I2CInterface
     HAL_StatusTypeDef memRead(uint16_t devAddress, uint16_t memAddress, uint16_t memAddressSize, uint32_t timeout);
     HAL_StatusTypeDef isDeviceReady(uint16_t devAddress, uint32_t trials = 100);
 
-    // Config methods for digital and analog  noise filters
-    //TO BE TESTED
-    HAL_StatusTypeDef configAnalogFilter(uint32_t FilterState);
-    HAL_StatusTypeDef configDigitalFilter(uint32_t FilterState);
+    /*
+        Config methods for digital and analog  noise filters
+        Analog:
+            I2C_ANALOGFILTER_ENABLE
+            I2C_ANALOGFILTER_DISABLE
+
+        Digital: 
+            FilterState from 0x00 and 0x0F
+    */ 
+    HAL_StatusTypeDef configAnalogFilter(uint32_t FilterState); 
+    HAL_StatusTypeDef configDigitalFilter(uint32_t FilterState); 
 };
 #endif

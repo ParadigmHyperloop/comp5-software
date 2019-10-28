@@ -5,7 +5,7 @@ cd into folder with Dockerfile
 
 " docker build -t pi_fc:v1 . " 
 
-" docker run -it -v path-to-FlightComputer-Dir:/home/data pi_fc /bin/bash " 
+" docker run -it -v path-to-FlightComputer-Dir:/home/data pi_fc:v1 /bin/bash " 
   
 // path-to-FlightComputer-Dir = /c/hyperloop/comp5-software/OnPod/FlightComputer on my windows machine
   

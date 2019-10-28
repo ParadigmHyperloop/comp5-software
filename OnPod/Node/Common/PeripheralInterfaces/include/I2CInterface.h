@@ -11,8 +11,7 @@ class I2CInterface
     I2C_HandleTypeDef *m_hi2c;
     uint8_t m_dataRecieved[8]; 
     uint8_t m_dataBufferLength = 8;
-    uint32_t m_timeout; 
-
+    
     public:
 
     // Constructor
@@ -36,7 +35,7 @@ class I2CInterface
     // Reading / writing from device internal memory addresses 
     HAL_StatusTypeDef memWrite(uint8_t* data, uint16_t devAddress, uint16_t memAddress, uint16_t memAddressSize, uint8_t size, uint32_t timeout);
     HAL_StatusTypeDef memRead(uint16_t devAddress, uint16_t memAddress, uint16_t memAddressSize, uint32_t timeout);
-    HAL_StatusTypeDef isDeviceReady(uint16_t devAddress, uint32_t trials = 100);
+    HAL_StatusTypeDef isDeviceReady(uint16_t devAddress, uint32_t trials = 100, uint32_t timeout);
 
     /*
         Config methods for digital and analog  noise filters

@@ -1,9 +1,6 @@
 #include "I2CInterface.h"
 
-I2CInterface::I2CInterface(I2C_HandleTypeDef *hi2c)
-{
-    m_hi2c = hi2c;
-}
+I2CInterface::I2CInterface(I2C_HandleTypeDef *hi2c):m_hi2c(hi2c) {}
 
 HAL_StatusTypeDef I2CInterface::masterTransmit(uint16_t devAddress, uint8_t *data, uint32_t timeout, uint8_t size)     
 { 
@@ -25,9 +22,9 @@ HAL_StatusTypeDef I2CInterface::memRead(uint16_t devAddress, uint16_t memAddress
     return HAL_I2C_Mem_Write(m_hi2c, devAddress, memAddress, memAddressSize, m_dataRecieved, m_dataBufferLength, timeout);
 }
 
-HAL_StatusTypeDef I2CInterface::isDeviceReady(uint16_t devAddress, uint32_t trials)
+HAL_StatusTypeDef I2CInterface::isDeviceReady(uint16_t devAddress, uint32_t trials, uint32_t timeout)
 {
-    return HAL_I2C_IsDeviceReady(m_hi2c, devAddress, trials, m_timeout);
+    return HAL_I2C_IsDeviceReady(m_hi2c, devAddress, trials, timeout);
 }
 
 HAL_StatusTypeDef I2CInterface::configAnalogFilter(uint32_t FilterState)

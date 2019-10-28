@@ -1,5 +1,5 @@
-#ifndef H_I2CINTERFACE
-#define H_I2CINTERFACE
+#ifndef NODE_I2CINTERFACE_H
+#define NODE_I2CINTERFACE_H
 
 #include "main.h"
 

@@ -1,7 +1,8 @@
 #include <unity.h>
 #include "PWMManager.h"
 
-PWMManager PWM(8000000, 0, 200, 100, htim2, TIM_CHANNEL_1);
+mock_PWMInterface interface(8000000, 0, 200, 100, 1, 0);
+PWMManager PWM(8000000, 0, 200, 100, interface);
 
 void testSetFrequencyHz(void)
 {

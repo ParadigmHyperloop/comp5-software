@@ -1,5 +1,6 @@
-#include "main.h"
+#include "tim.h"
 #include "PWMInterface.h"
+#include "mock_PWMInterface.h"
 
 #ifndef PWMMANAGER_H
 #define PWMMANAGER_H
@@ -22,6 +23,7 @@ public:
     uint32_t getPulseMs();
     void setPulseUs(uint32_t newPulse);
     uint32_t getPulseUs();
+    void updateInterface();
 
 private:
     uint64_t m_clockSpeed;
@@ -31,6 +33,7 @@ private:
     TIM_HandleTypeDef m_timer;   
     uint32_t m_channel;         
     PWMInterface m_interface;
+    mock_PWMInterface m_mockInterface;
 };
 
 #endif

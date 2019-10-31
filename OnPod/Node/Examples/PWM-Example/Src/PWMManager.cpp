@@ -11,6 +11,9 @@ void PWMManager::PWMStart()
     m_interface.setParameters(m_clockSpeed, m_preScaler, 
     m_period, m_pulse, m_timer, m_channel);
     
+    m_mockInterface.setParameters(m_clockSpeed, m_preScaler, 
+    m_period, m_pulse, m_timer, m_channel);
+    
     m_interface.PWMStart();
 }
 
@@ -22,7 +25,6 @@ void PWMManager::PWMStop()
 void PWMManager::setPulseMs(uint32_t newPulse)
 {
     m_pulse = (newPulse / 1000.0) * ((float)m_clockSpeed / (float)m_pulse);
-    m_interface.setPulse(m_pulse);
 }
 
 uint32_t PWMManager::getPulseMs()
@@ -33,7 +35,6 @@ uint32_t PWMManager::getPulseMs()
 void PWMManager::setPulseUs(uint32_t newPulse)
 {
     m_pulse = (newPulse / 1000000.0) * ((float)m_clockSpeed / (float)m_pulse);
-    m_interface.setPulse(m_pulse);
 }
 
 uint32_t PWMManager::getPulseUs()
@@ -44,7 +45,6 @@ uint32_t PWMManager::getPulseUs()
 void PWMManager::setDutyCyclePercent(uint8_t newDutyCycle)
 {
     m_pulse = m_period * (newDutyCycle / 100.0);
-    m_interface.setPulse(m_pulse);
 }
 
 uint8_t PWMManager::getDutyCyclePercent()
@@ -55,7 +55,6 @@ uint8_t PWMManager::getDutyCyclePercent()
 void PWMManager::setPeriodMs(uint32_t newPeriod)
 {
     m_period = (newPeriod / 1000.0) * ((float)m_clockSpeed / (float)m_preScaler);
-    m_interface.setPeriod(m_period);
 }
 
 uint32_t PWMManager::getPeriodMs()
@@ -66,7 +65,6 @@ uint32_t PWMManager::getPeriodMs()
 void PWMManager::setPeriodUs(uint32_t newPeriod)
 {
     m_period = (newPeriod / 1000000.0) * ((float)m_clockSpeed / (float)m_preScaler);
-    m_interface.setPeriod(m_period);
 }
 
 uint32_t PWMManager::getPeriodUs()
@@ -77,10 +75,15 @@ uint32_t PWMManager::getPeriodUs()
 void PWMManager::setFrequencyHz(uint32_t newFrequency)
 {
     m_period = (1.0 / newFrequency) * ((float)m_clockSpeed / (float)m_preScaler);
-    m_interface.setPeriod(m_period);
 }
 
 uint32_t PWMManager::getFrequencyHz()
 {
     return 1.0 / m_period;
+}
+
+void PWMManager::updateInterface()
+{
+    m_interface.setPeriod(m_period);
+    m_interface.setPulse(m_pulse);
 }

@@ -22,6 +22,16 @@ void PWMManager::PWMStop()
     m_interface.PWMStop();
 }
 
+void PWMManager::setPulseCycles(uint32_t newPulse)
+{
+    m_pulse = newPulse;
+}
+
+uint32_t PWMManager::getPulseCycles()
+{
+    return m_pulse;
+}
+
 void PWMManager::setPulseMs(uint32_t newPulse)
 {
     m_pulse = (newPulse / 1000.0) * ((float)m_clockSpeed / (float)m_pulse);
@@ -50,6 +60,16 @@ void PWMManager::setDutyCyclePercent(uint8_t newDutyCycle)
 uint8_t PWMManager::getDutyCyclePercent()
 {
     return ((float)m_pulse / (float)m_period) * 100.0;
+}
+
+uint32_t PWMManager::getPeriodCycles()
+{
+    return m_period;
+}
+
+void PWMManager::setPeriodCycles(uint32_t newPeriod)
+{
+    m_period = newPeriod;
 }
 
 void PWMManager::setPeriodMs(uint32_t newPeriod)

@@ -12,6 +12,8 @@ public:
     uint32_t pulse, PWMInterface interface);
     void PWMStart();
     void PWMStop();
+    void setPeriodCycles(uint32_t newPeriod);
+    uint32_t getPeriodCycles();
     void setPeriodMs(uint32_t newPeriod);
     uint32_t getPeriodMs();
     void setPeriodUs(uint32_t newPeriod);
@@ -20,6 +22,8 @@ public:
     uint8_t getDutyCyclePercent();
     void setFrequencyHz(uint32_t newFrequency);
     uint32_t getFrequencyHz();
+    void setPulseCycles(uint32_t newPulse);
+    uint32_t getPulseCycles();
     void setPulseMs(uint32_t newPulse);
     uint32_t getPulseMs();
     void setPulseUs(uint32_t newPulse);

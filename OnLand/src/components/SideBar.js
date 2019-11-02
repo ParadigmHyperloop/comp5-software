@@ -22,9 +22,20 @@ class SideBar extends React.Component {
   }
 
   loadSelectedPage() {
-    return (
-      <Dashboard />
-    );
+    switch (this.state.page) {
+      case 'Dashboard':
+        return <Dashboard />;
+        break;
+      case 'Batteries':
+        return <Dashboard />;
+        break;
+      case 'Flight':
+        return <Dashboard />;
+        break;
+      default:
+        return <Dashboard />;
+        break;
+    }
   }
 
   render() {

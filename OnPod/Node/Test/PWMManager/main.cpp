@@ -1,37 +1,82 @@
 #include <unity.h>
 #include "PWMManager.h"
 
-mock_PWMInterface interface(8000000, 0, 200, 100, 1, 0);
-PWMManager PWM(8000000, 0, 200, 100, interface);
+PWMManager::PWMManager(uint64_t clockSpeed, uint32_t preScaler, 
+uint32_t period, uint32_t pulse, mock_PWMInterface interface)
+: m_clockSpeed(clockSpeed), m_preScaler(preScaler), m_period(period),
+m_pulse(pulse), m_mockInterface(interface)
+{}
 
 void testSetFrequencyHz(void)
 {
+    mock_PWMInterface interface(8000000, 0, 200, 100, 1, 0);
+    PWMManager PWM(8000000, 0, 200, 100, interface);
     PWM.setFrequencyHz(300);
-    TEST_ASSERT_EQUAL_UINT8(300, PWM.getFrequencyHz());
+    TEST_ASSERT_EQUAL_UINT32(26666, PWM.getPeriodCycles());
+    PWM.setFrequencyHz(0);
+    TEST_ASSERT_EQUAL_UINT32(0, PWM.getPeriodCycles());
+    PWM.setFrequencyHz(10000000);
+    TEST_ASSERT_EQUAL_UINT32(0, PWM.getPeriodCycles());
 }
 
 void testSetPeriodMs(void)
 {
+    mock_PWMInterface interface(8000000, 0, 200, 100, 1, 0);
+    PWMManager PWM(8000000, 0, 200, 100, interface);
     PWM.setPeriodMs(200);
-    TEST_ASSERT_EQUAL_UINT32(200, PWM.getPeriodMs());
+    TEST_ASSERT_EQUAL_UINT32(1600000, PWM.getPeriodCycles());
+    PWM.setPeriodMs(0);
+    TEST_ASSERT_EQUAL_UINT32(0, PWM.getPeriodCycles());
+    PWM.setPeriodMs(1200);
+    TEST_ASSERT_EQUAL_UINT32(9600000, PWM.getPeriodCycles());
 }
 
 void testSetPeriodUs(void)
 {
+    mock_PWMInterface interface(8000000, 0, 200, 100, 1, 0);
+    PWMManager PWM(8000000, 0, 200, 100, interface);
     PWM.setPeriodUs(50);
-    TEST_ASSERT_EQUAL_UINT32(50, PWM.getPeriodUs());
+    TEST_ASSERT_EQUAL_UINT32(400, PWM.getPeriodCycles());
+    PWM.setPeriodUs(0);
+    TEST_ASSERT_EQUAL_UINT32(0, PWM.getPeriodCycles());
+    PWM.setPeriodUs(1200000);
+    TEST_ASSERT_EQUAL_UINT32(9600000, PWM.getPeriodCycles());
 }
 
 void testSetPulseMs(void)
 {
+    mock_PWMInterface interface(8000000, 0, 200, 100, 1, 0);
+    PWMManager PWM(8000000, 0, 200, 100, interface);
     PWM.setPulseMs(100);
-    TEST_ASSERT_EQUAL_UINT32(100, PWM.getPulseMs());
+    TEST_ASSERT_EQUAL_UINT32(800000, PWM.getPulseCycles());
+    PWM.setPulseMs(0);
+    TEST_ASSERT_EQUAL_UINT32(0, PWM.getPulseCycles());
+    PWM.setPulseMs(1200);
+    TEST_ASSERT_EQUAL_UINT32(9600000, PWM.getPulseCycles());
 }
 
 void testSetPulseUs(void)
 {
+    mock_PWMInterface interface(8000000, 0, 200, 100, 1, 0);
+    PWMManager PWM(8000000, 0, 200, 100, interface);
     PWM.setPulseUs(25);
-    TEST_ASSERT_EQUAL_UINT32(25, PWM.getPulseUs());
+    TEST_ASSERT_EQUAL_UINT32(200, PWM.getPulseCycles());
+    PWM.setPulseUs(0);
+    TEST_ASSERT_EQUAL_UINT32(0, PWM.getPulseCycles());
+    PWM.setPulseUs(1200000);
+    TEST_ASSERT_EQUAL_UINT32(9600000, PWM.getPulseCycles());
+}
+
+void testdutyCyclePercent(void)
+{
+    mock_PWMInterface interface(8000000, 0, 200, 100, 1, 0);
+    PWMManager PWM(8000000, 0, 200, 100, interface);
+    PWM.setDutyCyclePercent(75);
+    TEST_ASSERT_EQUAL_UINT32(150, PWM.getPulseCycles());
+    PWM.setDutyCyclePercent(100);
+    TEST_ASSERT_EQUAL_UINT32(200, PWM.getPulseCycles());
+    PWM.setDutyCyclePercent(0);
+    TEST_ASSERT_EQUAL_UINT32(0, PWM.getPulseCycles());
 }
 
 int main(void) 

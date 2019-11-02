@@ -1,6 +1,6 @@
 #include "ADCManager.h"
 
-ADCManger::ADCManager()
+ADCManager::ADCManager()
 {
 
     

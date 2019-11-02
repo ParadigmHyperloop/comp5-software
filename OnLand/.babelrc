@@ -8,9 +8,12 @@
       "modules": false
     }],
     "react",
-    "react-hmre"
+    "react-hmre",
+    "es2015"
   ],
   "plugins": [
-    "babel-plugin-transform-class-properties"
+    "babel-plugin-transform-class-properties",
+    "transform-es2015-destructuring",
+    "transform-object-rest-spread"
   ]
 }

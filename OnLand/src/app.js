@@ -1,20 +1,7 @@
-import './scss/style.scss';
+import './css/style.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Dashboard from './components/Dashboard';
+import Dashboard from './components/SideBar';
 
-const renderApplication = () => {
-  ReactDOM.render(
-    <Dashboard /> ,
-    document.querySelector('#root')
-  );
-}
-
-renderApplication(Dashboard);
-
-if (module.hot) {
-  module.hot.accept("./components/Dashboard", () => {
-    renderApplication();
-  });
-}
+ReactDOM.render(<Dashboard />, document.querySelector('#root'));

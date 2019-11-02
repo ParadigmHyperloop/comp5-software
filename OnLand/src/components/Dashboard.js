@@ -1,17 +1,18 @@
 import React from 'react';
 
-const formatName = user => `${user.firstName} ${user.lastName}`;
+class Dashboard extends React.Component {
 
-const user = {
-  firstName: 'John',
-  lastName: 'Doe'
-};
+  constructor(props) {
+    super(props);
+  }
 
-const Dashboard = () => (
-  <div>
-    <h1>Hello, {formatName(user)}!</h1>
-  </div>
-)
-
+  render() {
+    return (
+      <div>
+        <h2>hello world</h2>
+      </div>
+    );
+  }
+}
 
 export default Dashboard;

@@ -1,4 +1,4 @@
-#include "I2CInterface.h"
+#include "i2c_interface.h"
 
 I2CInterface::I2CInterface(I2C_HandleTypeDef *hi2c):m_hi2c(hi2c) {}
 

@@ -39,7 +39,7 @@ class I2CInterface
     HAL_StatusTypeDef memRead(uint16_t devAddress, uint16_t memAddress, 
                                 uint16_t memAddressSize, uint32_t timeout);
 
-    HAL_StatusTypeDef isDeviceReady(uint16_t devAddress, uint32_t trials = 100, uint32_t timeout);
+    HAL_StatusTypeDef isDeviceReady(uint16_t devAddress, uint32_t trials, uint32_t timeout);
 
     /*
         Config methods for digital and analog  noise filters

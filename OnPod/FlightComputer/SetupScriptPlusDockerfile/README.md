@@ -3,13 +3,12 @@ install docker // differes per platform, google it
 
 cd into folder with Dockerfile
 
-`docker build -t pi_fc:v1 .` 
+`docker build -t pi_fc:vb .` 
 
-`docker run -it -v path-to-FlightComputer-Dir:/home/data pi_fc:v1 /bin/bash` 
+`docker run -it -v /c/hyperloop/comp5-software/OnPod/FlightComputer:/home/data pi_fc:vd --entrypoint /bin/bash helloTest` 
   
 // path-to-FlightComputer-Dir = /c/hyperloop/comp5-software/OnPod/FlightComputer on my windows machine
   
-
 # General docker cmds
 `docker images -a` // list images 
 
@@ -17,14 +16,12 @@ cd into folder with Dockerfile
 
 `docker run -it pi_fc:v1 bin/bash` // run container and open a bash terminal 
   
-
 # Fix for script interpreter error // doz2unix equivalent for pi
-`sed -i.bak 's/\r$//' piSetup.sh`
+`sed -i.bak 's/\r$//' fileToFix.sh`
 
 # Remote SSH setup
-turn on ssh via gui 
+`sudo systemctl enable ssh`
+`sudo systemctl start ssh`
 
 `ifconfig` // to get ip address
-
 Default: user=pi password=raspberry
-

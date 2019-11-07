@@ -3,6 +3,19 @@
 
 #include "stm32f3xx_hal.h"
 
+enum class CanTxMailbox 
+{
+    MAILBOX0,
+    MAILBOX1,
+    MAILBOX2,
+};
+
+enum class CanRxFifo
+{
+    FIFO0,
+    FIFO1,
+};
+
 class CANInterface
 {
 private:
@@ -24,29 +37,21 @@ public:
 
     // Returns number of empty transmit mailboxes
     uint8_t getNumEmptyTxMailboxes(void);
-    // Set transmit mailbox to CAN_TX_MAILBOX0
-    void setTxMailbox0(void);
-    // Set transmit mailbox to CAN_TX_MAILBOX1
-    void setTxMailbox1(void);
-    // Set transmit mailbox to CAN_TX_MAILBOX2
-    void setTxMailbox2(void);
-    // Check if a tx message is pending in CAN_TX_MAILBOX0
-    bool isTxMessagePendingMailbox0(void);
-    // Check if a tx message is pending in CAN_TX_MAILBOX1
-    bool isTxMessagePendingMailbox1(void);
-    // Check if a tx message is pending in CAN_TX_MAILBOX2
-    bool isTxMessagePendingMailbox2(void);
+    // Set transmit mailbox to CAN_TX_MAILBOX0,1,2
+    void setTxMailbox(CanTxMailbox mailbox);
+    // Check if a tx message is pending in CAN_TX_MAILBOX0,1,2
+    bool isTxMessagePendingMailbox(CanTxMailbox mailbox);
     // Copy message to transmit mailbox - returns true if successful
     bool transmit(uint8_t *txData);
+    // Set transmit CAN ID
+    void setTxCanId(uint16_t can_id);
 
     // Get number of messages in recieve fifo 0
     uint8_t getNumMessagesFifo0(void);
     // Get number of messages in recieve fifo 0
     uint8_t getNumMessagesFifo1(void);
-    // Set recieve fifo to CAN_RX_FIFO0
-    void setRxFifo0(void);
-    // Set recieve fifo to CAN_RX_FIFO1
-    void setRxFifo1(void);
+    // Set recieve fifo to CAN_RX_FIFO0,1
+    void setRxFifo(CanRxFifo fifo);
     // Copy message from receive fifo - returns true if successful
     bool receive(uint8_t *rxData);
 };

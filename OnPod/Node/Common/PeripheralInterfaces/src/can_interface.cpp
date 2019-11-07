@@ -1,6 +1,7 @@
 #include "can_interface.h"
 #include "convert_hal_status.h"
 
+CANInterface::CANInterface(CAN_HandleTypeDef *can_handle) : m_can_handle(can_handle)
 {
     m_tx_header.StdId = 0x7FF;      // Lowest priority
     m_tx_header.ExtId = 0x000;      // Always 0 
@@ -16,6 +17,7 @@
     m_rx_header.Timestamp = 0;        // Never use this lol
     m_rx_header.FilterMatchIndex = 0; // wtf is this TODO
 }
+
 /// START/STOP ///
 bool CANInterface::start(void) {
     return halStatusToBool( HAL_CAN_Start(m_can_handle) );
@@ -31,39 +33,45 @@ uint8_t CANInterface::getNumEmptyTxMailboxes(void)
     return HAL_CAN_GetTxMailboxesFreeLevel(m_can_handle);
 }
 
-void CANInterface::setTxMailbox0(void) 
+void CANInterface::setTxMailbox(CanTxMailbox mailbox) 
 {
-    m_tx_mailbox = CAN_TX_MAILBOX0;
+    switch (mailbox)
+    {
+        case CanTxMailbox::MAILBOX0: 
+            m_tx_mailbox = CAN_TX_MAILBOX0;
+            break;
+        case CanTxMailbox::MAILBOX1:
+            m_tx_mailbox = CAN_TX_MAILBOX1;
+            break;
+        case CanTxMailbox::MAILBOX2:
+            m_tx_mailbox = CAN_TX_MAILBOX2;
+            break;
+    }
 }
 
-void CANInterface::setTxMailbox1(void) 
+bool CANInterface::isTxMessagePendingMailbox(CanTxMailbox mailbox) 
 {
-    m_tx_mailbox = CAN_TX_MAILBOX1;
-}
-
-void CANInterface::setTxMailbox2(void) 
-{
-    m_tx_mailbox = CAN_TX_MAILBOX2;
-}
-
-bool CANInterface::isTxMessagePendingMailbox0(void) 
-{
-    return HAL_CAN_IsTxMessagePending(m_can_handle, CAN_TX_MAILBOX0);
-}
-
-bool CANInterface::isTxMessagePendingMailbox1(void) 
-{
-    return HAL_CAN_IsTxMessagePending(m_can_handle, CAN_TX_MAILBOX1);
-}
-
-bool CANInterface::isTxMessagePendingMailbox2(void) 
-{
-    return HAL_CAN_IsTxMessagePending(m_can_handle, CAN_TX_MAILBOX2);
+    switch (mailbox)
+    {
+        case CanTxMailbox::MAILBOX0: 
+            return HAL_CAN_IsTxMessagePending(m_can_handle, CAN_TX_MAILBOX0);
+        case CanTxMailbox::MAILBOX1:
+            return HAL_CAN_IsTxMessagePending(m_can_handle, CAN_TX_MAILBOX0);
+        case CanTxMailbox::MAILBOX2:
+            return HAL_CAN_IsTxMessagePending(m_can_handle, CAN_TX_MAILBOX0);
+        default:
+            return true;
+    }
 }
 
 bool CANInterface::transmit(uint8_t *txData)
 {
     return halStatusToBool( HAL_CAN_AddTxMessage(m_can_handle, &m_tx_header, txData, &m_tx_mailbox) );
+}
+
+void CANInterface::setTxCanId(uint16_t can_id)
+{
+    m_tx_header.StdId = can_id;
 }
 
 /// RECEIVE ///
@@ -77,12 +85,15 @@ uint8_t CANInterface::getNumMessagesFifo1(void)
     return HAL_CAN_GetRxFifoFillLevel(m_can_handle, CAN_FILTER_FIFO1);
 }
 
-void CANInterface::setRxFifo0(void) {
-    m_rx_fifo = CAN_RX_FIFO0;
-}
-
-void CANInterface::setRxFifo1(void) {
-    m_rx_fifo = CAN_RX_FIFO1;
+void CANInterface::setRxFifo(CanRxFifo fifo) 
+{
+    switch (fifo)
+    {
+        case CanRxFifo::FIFO0:
+            m_rx_fifo = CAN_RX_FIFO0;
+        case CanRxFifo::FIFO1:
+            m_rx_fifo = CAN_RX_FIFO1;
+    }
 }
 
 bool CANInterface::receive(uint8_t *rxData) 

@@ -1,8 +1,21 @@
 #include "can_interface.h"
 #include "convert_hal_status.h"
 
-CANInterface::CANInterface(CAN_HandleTypeDef *can_handle) : m_can_handle(can_handle) {}
+{
+    m_tx_header.StdId = 0x7FF;      // Lowest priority
+    m_tx_header.ExtId = 0x000;      // Always 0 
+    m_tx_header.IDE = CAN_ID_STD;   // Always standard
+    m_tx_header.RTR = CAN_RTR_DATA; // Always data
+    m_tx_header.DLC = 0;            // 0 by default
 
+    m_rx_header.StdId = 0x7FF;        // Lowest priority
+    m_rx_header.ExtId = 0x000;        // Always 0 
+    m_rx_header.IDE = CAN_ID_STD;     // Always standard
+    m_tx_header.RTR = CAN_RTR_DATA;   // Always data
+    m_tx_header.DLC = 0;              // 0 by default
+    m_rx_header.Timestamp = 0;        // Never use this lol
+    m_rx_header.FilterMatchIndex = 0; // wtf is this TODO
+}
 /// START/STOP ///
 bool CANInterface::start(void) {
     return halStatusToBool( HAL_CAN_Start(m_can_handle) );

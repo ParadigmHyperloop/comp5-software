@@ -1,4 +1,4 @@
-#include "main.h"
+#include "stm32f3xx_hal.h"
 
 #ifndef PWMINTERFACE_H
 #define PWMINTERFACE_H

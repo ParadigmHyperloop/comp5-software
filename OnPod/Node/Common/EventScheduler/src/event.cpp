@@ -51,6 +51,11 @@ void Event::setCallback(void (*callback)(void))
     m_callback = callback;
 }
 
+void Event::setNumCallsLeft(uint32_t num_calls)
+{
+    m_num_calls_left = num_calls;
+}
+
 
 void Event::decrementNumCallsLeft(void)
 {

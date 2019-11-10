@@ -4,21 +4,21 @@ void EventScheduler::updateEvents(timeMs_t current_time)
 {
     for (eventId_t id = 0; id < m_MAX_NUM_EVENTS; id++)
     {
-        Event event = m_events[id];
-        if (event.getType() == EventType::UNASSIGNED 
-            || event.getState() == EventState::STOPPED)
+        if (m_events[id].getType() == EventType::UNASSIGNED || 
+            m_events[id].getState() == EventState::STOPPED)
         {
             continue;
         }
-        if ((current_time-event.getLastTimeCalledMs() >= event.getDelayMs()))
+        if ((current_time - m_events[id].getLastTimeCalledMs() >= m_events[id].getDelayMs()))
         {
-            event.callCallback();
-            if (event.getType() == EventType::FINITE)
+            m_events[id].callCallback();
+            m_events[id].setLastTimeCalledMs(current_time);
+            if (m_events[id].getType() == EventType::FINITE)
             {
-                event.decrementNumCallsLeft();
-                if (event.getNumCallsLeft() == 0)
+                m_events[id].decrementNumCallsLeft();
+                if (m_events[id].getNumCallsLeft() == 0)
                 {
-                    event.cleanup();
+                    m_events[id].cleanup();
                 }
             }
         }
@@ -51,13 +51,12 @@ eventId_t EventScheduler::callFunctionEvery(timeMs_t delay_ms, void (*callback)(
                                             timeMs_t current_time)
 {
     eventId_t id = findFreeEvent();
-    Event event = m_events[id];
-    event.setType(EventType::FINITE);
-    event.setState(EventState::STARTED);
-    event.setDelayMs(delay_ms);
-    event.setLastTimeCalledMs(current_time);
-    event.setCallback(callback);
-    event.setNumCallsLeft(repeat_count);
+    m_events[id].setType(EventType::FINITE);
+    m_events[id].setState(EventState::STARTED);
+    m_events[id].setDelayMs(delay_ms);
+    m_events[id].setLastTimeCalledMs(current_time);
+    m_events[id].setCallback(callback);
+    m_events[id].setNumCallsLeft(repeat_count);
     return id;
 }
 
@@ -66,13 +65,12 @@ eventId_t EventScheduler::callFunctionEvery(timeMs_t delay_ms, void (*callback)(
 
 {
     eventId_t id = findFreeEvent();
-    Event event = m_events[id];
-    event.setType(EventType::FOREVER);
-    event.setState(EventState::STARTED);
-    event.setDelayMs(delay_ms);
-    event.setLastTimeCalledMs(current_time);
-    event.setCallback(callback);
-    event.setNumCallsLeft(0);
+    m_events[id].setType(EventType::FOREVER);
+    m_events[id].setState(EventState::STARTED);
+    m_events[id].setDelayMs(delay_ms);
+    m_events[id].setLastTimeCalledMs(current_time);
+    m_events[id].setCallback(callback);
+    m_events[id].setNumCallsLeft(0);
     return id;
 }
 
@@ -80,12 +78,11 @@ eventId_t EventScheduler::callFunctionAfter(timeMs_t delay_ms, void (*callback)(
                                             timeMs_t current_time)
 {
     eventId_t id = findFreeEvent();
-    Event event = m_events[id];
-    event.setType(EventType::FINITE);
-    event.setState(EventState::STARTED);
-    event.setDelayMs(delay_ms);
-    event.setLastTimeCalledMs(current_time);
-    event.setCallback(callback);
-    event.setNumCallsLeft(1);
+    m_events[id].setType(EventType::FINITE);
+    m_events[id].setState(EventState::STARTED);
+    m_events[id].setDelayMs(delay_ms);
+    m_events[id].setLastTimeCalledMs(current_time);
+    m_events[id].setCallback(callback);
+    m_events[id].setNumCallsLeft(1);
     return id;
 }

@@ -52,8 +52,8 @@ void EventScheduler::stopEvent(eventId_t event_id)
     m_events[event_id].setState(EventState::STOPPED);
 }
 
-eventId_t EventScheduler::callFunctionEvery(timeMs_t delay_ms, void (*callback)(void), uint32_t repeat_count,
-                                            timeMs_t current_time)
+eventId_t EventScheduler::callFunctionEvery(timeMs_t delay_ms, void (*callback)(void),
+                                            timeMs_t current_time, uint32_t repeat_count)
 {
     eventId_t id = findFreeEvent();
     m_events[id].setType(EventType::FINITE);
@@ -82,5 +82,5 @@ eventId_t EventScheduler::callFunctionEvery(timeMs_t delay_ms, void (*callback)(
 eventId_t EventScheduler::callFunctionAfter(timeMs_t delay_ms, void (*callback)(void),
                                             timeMs_t current_time)
 {
-    return callFunctionEvery(delay_ms, callback, 1, current_time);
+    return callFunctionEvery(delay_ms, callback, current_time, 1);
 }

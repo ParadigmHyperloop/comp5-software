@@ -62,7 +62,6 @@ void Event::decrementNumCallsLeft(void)
     m_num_calls_left--;
 }
 
-
 void Event::callCallback(void)
 {
     m_callback();

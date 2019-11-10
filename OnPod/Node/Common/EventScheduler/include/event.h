@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-typedef uint32_t timeMs_t;
+typedef uint32_t timeMs_t; // Time in ms
 
 enum class EventType
 {
@@ -29,11 +29,15 @@ class Event
         uint32_t m_num_calls_left = 0;
 
     public:
+        // Getters
+
         EventType getType(void);
         EventState getState(void);
         timeMs_t getDelayMs(void);
         timeMs_t getLastTimeCalledMs(void);
         uint32_t getNumCallsLeft(void);
+
+        // Setters
 
         void setType(EventType type);
         void setState(EventState state);
@@ -42,10 +46,10 @@ class Event
         void setCallback(void (*callback)(void));
         void setNumCallsLeft(uint32_t num_calls);
 
+        // Take away one from the event's `m_num_calls_left`
         void decrementNumCallsLeft(void);
-
         void callCallback(void);
-        // Clear all event attributes to prepare for reassignment
+        // Reset event attributes to prepare for reassignment
         void cleanup(void);
 };
 

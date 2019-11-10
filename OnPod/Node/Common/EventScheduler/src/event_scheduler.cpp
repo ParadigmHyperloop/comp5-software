@@ -77,12 +77,5 @@ eventId_t EventScheduler::callFunctionEvery(timeMs_t delay_ms, void (*callback)(
 eventId_t EventScheduler::callFunctionAfter(timeMs_t delay_ms, void (*callback)(void),
                                             timeMs_t current_time)
 {
-    eventId_t id = findFreeEvent();
-    m_events[id].setType(EventType::FINITE);
-    m_events[id].setState(EventState::STARTED);
-    m_events[id].setDelayMs(delay_ms);
-    m_events[id].setLastTimeCalledMs(current_time);
-    m_events[id].setCallback(callback);
-    m_events[id].setNumCallsLeft(1);
-    return id;
+    return callFunctionEvery(delay_ms, callback, 1, current_time);
 }

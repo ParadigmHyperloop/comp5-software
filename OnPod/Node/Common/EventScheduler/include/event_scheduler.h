@@ -23,7 +23,10 @@ class EventScheduler
         // If the repeat limit is reached, reset the event object.
         void updateEvents(timeMs_t current_time);
 
+        // Resumes the event's calls
         void startEvent(eventId_t event_id);
+        // Pauses all the event's calls.
+        // If the event has a certain number of repeats, they will be preserved after starting again.
         void stopEvent(eventId_t event_id);
 
         // Call `callback` every `delay_ms` milliseconds, `repeat_count` times.

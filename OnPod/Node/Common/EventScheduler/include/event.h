@@ -30,7 +30,6 @@ class Event
 
     public:
         // Getters
-
         EventType getType(void);
         EventState getState(void);
         timeMs_t getDelayMs(void);
@@ -38,7 +37,6 @@ class Event
         uint32_t getNumCallsLeft(void);
 
         // Setters
-
         void setType(EventType type);
         void setState(EventState state);
         void setDelayMs(timeMs_t delay_ms);

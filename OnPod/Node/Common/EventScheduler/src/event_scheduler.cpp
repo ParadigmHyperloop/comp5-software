@@ -67,7 +67,6 @@ eventId_t EventScheduler::callFunctionEvery(timeMs_t delay_ms, void (*callback)(
 
 eventId_t EventScheduler::callFunctionEvery(timeMs_t delay_ms, void (*callback)(void),
                                             timeMs_t current_time)
-
 {
     eventId_t id = findFreeEvent();
     m_events[id].setType(EventType::FOREVER);

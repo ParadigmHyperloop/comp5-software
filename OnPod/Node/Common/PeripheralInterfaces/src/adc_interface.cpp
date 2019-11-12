@@ -1,4 +1,4 @@
-#include "ADCInterface.h"
+#include "adc_interface.h"
 
 ADCInterface::ADCInterface()
 {

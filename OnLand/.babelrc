@@ -1,0 +1,19 @@
+{
+  "presets": [
+    ["env", { 
+      "targets": {
+        "browsers": "last 2 versions"
+      },
+      "loose": true,
+      "modules": false
+    }],
+    "react",
+    "react-hmre",
+    "es2015"
+  ],
+  "plugins": [
+    "babel-plugin-transform-class-properties",
+    "transform-es2015-destructuring",
+    "transform-object-rest-spread"
+  ]
+}

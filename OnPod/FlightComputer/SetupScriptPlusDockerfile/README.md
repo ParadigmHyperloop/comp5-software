@@ -3,11 +3,12 @@ install docker // differes per platform, google it
 
 cd into folder with Dockerfile
 
-`docker build -t pi_fc:vb .` 
+`docker build -t pi_fc:v1 .` 
 
-`docker run -it -v /c/hyperloop/comp5-software/OnPod/FlightComputer:/home/data pi_fc:vd --entrypoint /bin/bash helloTest` 
+`docker run -it -v <path-to-flight-computer-dir>:/home/data --entrypoint /bin/bash pi_fc:v1` 
   
-// path-to-FlightComputer-Dir = /c/hyperloop/comp5-software/OnPod/FlightComputer on my windows machine
+// my windows machine
+// `docker run -it -v /c/hyperloop/comp5-software/OnPod/FlightComputer:/home/data --entrypoint /bin/bash pi_fc:v1` 
   
 # General docker cmds
 `docker images -a` // list images 

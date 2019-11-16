@@ -11,10 +11,16 @@ RUN sudo apt-get install -y \
         libstdc++6-4.6-dev
 
 COPY clangSetup.sh /home
-COPY helloTest.sh /home
-RUN sed -i.bak 's/\r$//' /home/clangSetup.sh && \
-        ./home/clangSetup.sh && \
-        sed -i.bak 's/\r$//' /home/helloTest.sh && \
-        ./home/helloTest.sh
+RUN cd ~ && \
+        wget http://releases.llvm.org/9.0.0/clang+llvm-9.0.0-armv7a-linux-gnueabihf.tar.xz && \
+        tar -xvf clang+llvm-9.0.0-armv7a-linux-gnueabihf.tar.xz && \
+        rm clang+llvm-9.0.0-armv7a-linux-gnueabihf.tar.xz && \
+        mv clang+llvm-9.0.0-armv7a-linux-gnueabihf clang_9.0.0 && \
+        sudo mv clang_9.0.0 /usr/local && \
+        echo 'export PATH=/usr/local/clang_9.0.0/bin:$PATH' >> ~/.bashrc && \
+        echo 'export LD_LIBRARY_PATH=/usr/local/clang_9.0.0/lib:$LD_LIBRARY_PATH' >> ~/.bashrc && \
+        . ~/.bashrc && \
+        clang++ --version 
 
-#RUN echo 'alias helloTest="clang++ /home/data/SetupScriptPlusDockerfile/test_main.cpp; ./home/data/SetupScriptPlusDockerfile/a.out"' >> ~/.bashrc
+COPY helloTest.sh /usr/local/bin/ 
+RUN sed -i.bak 's/\r$//' /usr/local/bin/helloTest.sh

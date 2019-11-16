@@ -1,5 +1,7 @@
 #!/bin/bash
 ## custom aliases
 # test c++ compilation
+. ~/.bashrc
+cd ~
 clang++ /home/data/SetupScriptPlusDockerfile/test_main.cpp
-./home/data/SetupScriptPlusDockerfile/a.out
+./a.out

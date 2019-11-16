@@ -14,7 +14,7 @@ void EventScheduler::updateEvents(timeMs_t current_time)
         // If the event's delay has passed
         if ((current_time - m_events[id].getLastTimeCalledMs() >= m_events[id].getDelayMs()))
         {
-            m_events[id].callCallback();
+            m_events[id].callback();
             m_events[id].setLastTimeCalledMs(current_time);
             // If the event only runs a certain number of times
             if (m_events[id].getType() == EventType::FINITE)

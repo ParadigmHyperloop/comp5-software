@@ -50,7 +50,7 @@ class Event
 
         // Take away one from the event's `m_num_calls_left`
         void decrementNumCallsLeft(void) { m_num_calls_left--; };
-        void callCallback(void) { m_callback(); };
+        void callback(void) { m_callback(); };
         // Reset event attributes to prepare for reassignment
         void cleanup(void);
 };

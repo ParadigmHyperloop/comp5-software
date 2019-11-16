@@ -23,4 +23,5 @@ RUN cd ~ && \
         clang++ --version 
 
 COPY helloTest.sh /usr/local/bin/ 
-RUN sed -i.bak 's/\r$//' /usr/local/bin/helloTest.sh
+RUN sed -i.bak 's/\r$//' /usr/local/bin/helloTest.sh && \
+        chmod +X /usr/local/bin/helloTest.sh

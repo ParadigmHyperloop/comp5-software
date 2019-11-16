@@ -5,11 +5,13 @@ cd into folder with Dockerfile
 
 `docker build -t pi_fc:v1 .` 
 
-`docker run -it -v <path-to-flight-computer-dir>:/home/data --entrypoint /bin/bash pi_fc:v1` 
+`docker run -it -v <path-to-flight-computer-dir>:/home/data --entrypoint helloTest.sh pi_fc:v1` 
   
 // my windows machine
-// `docker run -it -v /c/hyperloop/comp5-software/OnPod/FlightComputer:/home/data --entrypoint /bin/bash pi_fc:v1` 
-  
+// `docker run -it -v /c/hyperloop/comp5-software/OnPod/FlightComputer:/home/data --entrypoint helloTest.sh  pi_fc:v1`
+// to run with bash shell open
+// `docker run -it -v /c/hyperloop/comp5-software/OnPod/FlightComputer:/home/data --entrypoint /bin/bash  pi_fc:v1`
+
 # General docker cmds
 `docker images -a` // list images 
 

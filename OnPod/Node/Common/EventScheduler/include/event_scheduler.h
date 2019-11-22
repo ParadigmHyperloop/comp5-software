@@ -9,7 +9,7 @@ class EventScheduler
 {
     private:
         // Number of events that can be active at once
-        static const uint8_t m_MAX_NUM_EVENTS = 50;
+        static const int16_t m_MAX_NUM_EVENTS = 50;
         // Map of Event objects
         std::map<eventId_t, Event> m_events;
 

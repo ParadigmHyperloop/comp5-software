@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-typedef int8_t eventId_t; // Should range from 0-127. -1 indicates error in finding free ID
+typedef int16_t eventId_t; // Should range from 0-127. -1 indicates error in finding free ID
 typedef uint32_t timeMs_t; // Time in ms
 
 enum class EventType

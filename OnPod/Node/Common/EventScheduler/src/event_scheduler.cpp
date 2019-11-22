@@ -3,7 +3,10 @@
 
 void EventScheduler::updateEvents(timeMs_t current_time)
 {
+    // Can't erase key/value pairs in the for loop
+    // Keep track of them in this vector then erase them afterwards
     std::vector<eventId_t> events_to_erase;
+    // Iterate over map to find events that are due
     for (auto& [id, event] : m_events)
     {
         if (event.state == EventState::STOPPED)
@@ -20,11 +23,13 @@ void EventScheduler::updateEvents(timeMs_t current_time)
                 event.num_calls_left--;
                 if (event.num_calls_left == 0)
                 {
+                    // Add to temporary vector to be removed
                     events_to_erase.push_back(id);
                 }
             }
         }
     }
+    // Remove key/value pairs that had expired
     for (auto const id : events_to_erase)
     {
         m_events.erase(id);
@@ -38,11 +43,11 @@ eventId_t EventScheduler::findFreeEventId(void)
     {
         return -1;
     }
-    else if (m_events.empty())
+    // If empty use first id, 0
+    if (m_events.empty())
     {
         return 0;
     }
-    
     // Iterate over the map and see if index_being_checked is already taken
     // If so, check the next index. If not, the new event's id will be index_being_checked
     eventId_t index_being_checked = 0;
@@ -57,6 +62,7 @@ eventId_t EventScheduler::findFreeEventId(void)
             return index_being_checked;
         }
     }
+    // If there were no gaps in the map then use the next index up
     if (index_being_checked <= m_MAX_NUM_EVENTS)
     {
         return index_being_checked;

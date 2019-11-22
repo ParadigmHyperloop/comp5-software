@@ -10,10 +10,10 @@ class EventScheduler
     private:
         // Number of events that can be active at once
         static const int16_t m_MAX_NUM_EVENTS = 50;
-        // Map of Event objects
+        // Map to hold events and their ids
         std::map<eventId_t, Event> m_events;
 
-        //
+        // Return a free event id
         eventId_t findFreeEventId(void);
 
     public:

@@ -48,8 +48,8 @@ eventId_t EventScheduler::findFreeEventId(void)
     {
         return 0;
     }
-    // Iterate over the map and see if index_being_checked is already taken
-    // If so, check the next index. If not, the new event's id will be index_being_checked
+    // Check for gaps in the map
+    // Iterate and see if index_being_checked is available
     eventId_t index_being_checked = 0;
     for (auto event : m_events)
     {

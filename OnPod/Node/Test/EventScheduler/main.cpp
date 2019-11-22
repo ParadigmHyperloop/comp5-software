@@ -21,8 +21,8 @@ void startEvent_eventNotStarted_eventStarted(void)
 {
     EventScheduler event_scheduler;
     eventId_t event = event_scheduler.callFunctionAfter(1000, testCallback, 0);
-    event_scheduler.stopEvent(event);
-    event_scheduler.startEvent(event);
+    //event_scheduler.stopEvent(event);
+    //event_scheduler.startEvent(event);
     event_scheduler.updateEvents(1001);
     TEST_ASSERT_EQUAL_UINT16(1, test_callback_run_count);
 }
@@ -199,6 +199,74 @@ void callFunctionAfter_delayPassedTwice_functionCalledOnce(void)
     resetTestCallback();
 }
 
+// findFreeEvent
+void findFreeEvent_makeOneEvents_idIsZero(void)
+{
+    EventScheduler event_scheduler;
+    eventId_t id = event_scheduler.callFunctionEvery(0, testCallback, 0);
+    TEST_ASSERT_EQUAL_INT16(0, id);
+}
+
+void findFreeEvent_makeTwoEvents_secondIdIsOne(void)
+{
+    EventScheduler event_scheduler;
+    event_scheduler.callFunctionEvery(0, testCallback, 0);
+    eventId_t id = event_scheduler.callFunctionEvery(0, testCallback, 0);
+    TEST_ASSERT_EQUAL_INT16(1, id);
+}
+
+void findFreeEvent_expireEventThenMakeSecond_secondIdIsZero(void)
+{
+    EventScheduler event_scheduler;
+    event_scheduler.callFunctionAfter(1000, testCallback, 0);
+    event_scheduler.updateEvents(1001);
+    eventId_t id = event_scheduler.callFunctionEvery(0, testCallback, 0);
+    TEST_ASSERT_EQUAL_INT16(0, id);
+}
+
+void findFreeEvent_makeThreeExpireSecondMakeFourth_fourthIdIsOne(void)
+{
+    EventScheduler event_scheduler;
+    event_scheduler.callFunctionEvery(1000, testCallback, 0);
+    event_scheduler.callFunctionAfter(1000, testCallback, 0);
+    event_scheduler.callFunctionEvery(1000, testCallback, 0);
+    event_scheduler.updateEvents(1001);
+    eventId_t id = event_scheduler.callFunctionEvery(0, testCallback, 0);
+    TEST_ASSERT_EQUAL_INT16(1, id);
+}
+
+void findFreeEvent_makeMaxPlusOneEvents_errorIsReturned(void)
+{
+    EventScheduler event_scheduler;
+    // Make MAX events
+    for (eventId_t id = 0; id < event_scheduler.getMaxNumEvents(); id++)
+    {
+        event_scheduler.callFunctionEvery(0, testCallback, 0);
+    }
+    eventId_t last_id = event_scheduler.callFunctionEvery(0, testCallback, 0);
+    TEST_ASSERT_EQUAL_INT16(-1, last_id);
+}
+
+void findFreeEvent_makeMaxThenExpireOneThenMakeEvent_validIdReturned(void)
+{
+    EventScheduler event_scheduler;
+    // Make MAX-1 events that won't expire
+    for (eventId_t id = 0; id < event_scheduler.getMaxNumEvents()-1; id++)
+    {
+        event_scheduler.callFunctionEvery(1000, testCallback, 0);
+    }
+    // Make final event that will expire
+    event_scheduler.callFunctionAfter(0, testCallback, 0);
+    // Try and fail to make a MAX+1th event
+    event_scheduler.callFunctionEvery(0, testCallback, 0);
+    // Expire final element
+    event_scheduler.updateEvents(999);
+    // Try (successfully) to make a MAXth element
+    eventId_t id = event_scheduler.callFunctionEvery(0, testCallback, 0);
+    // Assert id is MAX-1 (-1 to account for account for ids starting at 0)
+    TEST_ASSERT_EQUAL_INT16(event_scheduler.getMaxNumEvents()-1, id);
+}
+
 int main(void)
 {
     UNITY_BEGIN();
@@ -247,6 +315,20 @@ int main(void)
     RUN_TEST(callFunctionAfter_delayNotPassed_functionNotCalled);
     resetTestCallback();
     RUN_TEST(callFunctionAfter_delayPassedTwice_functionCalledOnce);
+    resetTestCallback();
+
+    // Test private method findFreeEvent indirectly
+    RUN_TEST(findFreeEvent_makeOneEvents_idIsZero);
+    resetTestCallback();
+    RUN_TEST(findFreeEvent_makeTwoEvents_secondIdIsOne);
+    resetTestCallback();
+    RUN_TEST(findFreeEvent_expireEventThenMakeSecond_secondIdIsZero);
+    resetTestCallback();
+    RUN_TEST(findFreeEvent_makeThreeExpireSecondMakeFourth_fourthIdIsOne);
+    resetTestCallback();
+    RUN_TEST(findFreeEvent_makeMaxPlusOneEvents_errorIsReturned);
+    resetTestCallback();
+    RUN_TEST(findFreeEvent_makeMaxThenExpireOneThenMakeEvent_validIdReturned);
     resetTestCallback();
 
     UNITY_END();

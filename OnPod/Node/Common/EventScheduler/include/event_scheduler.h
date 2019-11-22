@@ -17,7 +17,7 @@ class EventScheduler
         eventId_t findFreeEventId(void);
 
     public:
-        
+        int16_t getMaxNumEvents(void) { return m_MAX_NUM_EVENTS; };
         // Check if any callbacks must be called and execute them.
         // If the repeat limit is reached, reset the event object.
         void updateEvents(timeMs_t current_time);

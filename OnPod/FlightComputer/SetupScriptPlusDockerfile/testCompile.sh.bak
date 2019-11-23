@@ -1,5 +1,0 @@
-#!/bin/bash
-# test c++ compilation
-cd /home/data/SetupScriptPlusDockerfile
-clang++ test_main.cpp
-./a.out

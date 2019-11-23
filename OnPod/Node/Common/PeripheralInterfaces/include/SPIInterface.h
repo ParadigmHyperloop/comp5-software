@@ -8,7 +8,7 @@ class SPIInterface
 private:
 
     SPI_HandleTypeDef *m_hspi;
-    uint8_t m_dataReceived[8];
+    uint8_t m_dataReceived[2];
 
 public:
 
@@ -23,11 +23,10 @@ public:
     uint32_t getError() { return HAL_SPI_GetError(m_hspi); }
 
     // Master transmit and receive functions
-    HAL_StatusTypeDef Transmit(uint8_t* data, uint32_t timeout, uint8_t size);
-    HAL_StatusTypeDef Receive(uint32_t timeout, uint8_t size);
-
-
-    HAL_StatusTypeDef isDeviceReady(uint16_t devAddress, uint32_t trials, uint32_t timeout);
+    HAL_StatusTypeDef Transmit(uint8_t* data, uint8_t size, uint32_t timeout);
+    HAL_StatusTypeDef Receive(uint32_t timeout, uint8_t size);  
+    HAL_StatusTypeDef TransmitReceive(uint8_t* dataIn, uint8_t size, 
+                                        uint32_t timeout,);
 
 };
 #endif

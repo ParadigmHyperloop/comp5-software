@@ -24,4 +24,4 @@ RUN cd ~ && \
 
 COPY helloTest.sh /usr/local/bin/ 
 RUN sed -i.bak 's/\r$//' /usr/local/bin/helloTest.sh && \
-        chmod +X /usr/local/bin/helloTest.sh
+        chmod +x /usr/local/bin/helloTest.sh
